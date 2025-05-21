@@ -3,14 +3,479 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script type="module" src="app.js"></script>
+    <title>Simulador de Campanha</title>
+    <script type="module" src="old-app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+
+      * {
+         box-sizing: border-box;
+         font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+      }
+
+      h1 {
+         font-size: 32px;
+         font-weight: 500;
+         margin: 0 0 16px 0;
+      }
+
+      p {
+         margin: 0;
+      }
+
+      main {
+         border-radius: 48px;
+         box-shadow: 0px 1px 12px 1px rgba(0, 0, 0, 0.1);
+         display: flex;
+         flex-direction: column;
+         height: 626px;
+         margin: 0 auto;
+         padding: 32px;
+         width: 1244px;
+      }
+
+         #simulador {
+            display: grid;
+            grid-template-rows: auto 1fr; 
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            padding-top: 16px;
+         }
+
+            #simulador h2 {
+                font-weight: 500;
+                  grid-row: 1;
+                  grid-column: 1;
+                  margin: 0;
+            }
+
+            #simulador div.actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap; /* Allow wrapping if the content overflows */
+}
+
+#file-name-container {
+    flex: 1; /* Allow the file name container to take up available space */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add ellipsis for long file names */
+    white-space: nowrap; /* Prevent text from wrapping */
+    font-size: 14px;
+    color: #555;
+    font-style: italic;
+}
+
+      /* Hide the up and down arrows for number inputs */
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+         -webkit-appearance: none;
+         margin: 0;
+      }
+
+      input[type="number"] {
+         -moz-appearance: textfield; /* For Firefox */
+      }
+
+.input-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+}
+
+.input-buttons {
+    display: flex;
+    flex-direction: column; /* Stack the buttons vertically */
+    gap: 4px; /* Add spacing between the buttons */
+}
+
+.bairros-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 434px; /* Adjust as needed */
+    }
+
+    .bairro-row {
+         width: 538px;
+         height: 52px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         padding: 8px 16px;
+         background-color: #fff;
+         border: 1px solid #ddd;
+         border-radius: 8px;
+         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .bairro-label {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 2;
+      font-size: 14px;
+      color: #333;
+      height: 36px;
+    }
+
+    .bairro-label p {
+        font-size: 12px;
+    }
+    .planning-label {
+      display: flex;
+      height: 36px;
+      justify-content: space-between;
+        flex: 2;
+        font-size: 14px;
+        color: #555;
+        padding: 0 0 0 24px;
+    }
+
+    .planning-label-info {
+         display: flex;
+         align-items: center;
+         gap: 4px;
+    }
+
+    .planning-label p {
+      font-weight: bold;
+      line-height: 20px;
+      width: 100px;
+    }
+
+    .planning-label span {
+        display: block;
+        font-size: 12px;
+        color: #777;
+        margin-left: 16px;
+    }
+
+    .bairro-input {
+    width: 72px;
+    height: 36px;
+    text-align: end;
+    padding: 0 8px 0 0;
+    font-size: 24px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+   .buttons-container {
+    display: flex;
+    flex-direction: column; /* Stack the buttons vertically */
+    gap: 4px; /* Add spacing between the buttons */
+    align-items: center; /* Center the buttons horizontally */
+    height: 36px; /* Make the container take the full height of the row */
+   }
+
+.increment-button,
+.decrement-button {
+    width: 32px;
+    height: 16px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 256px;
+    cursor: pointer;
+}
+
+.increment-button:hover,
+.decrement-button:hover {
+    background-color: #0056b3;
+}
+
+#bairros-container {
+    grid-column: 1; /* Place in the first column */
+    grid-row: 2; /* Place in the second row */
+}
+
+.resultado-container {
+   grid-column: 2;
+   grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    gap: 16px;
+}
+
+.resultado-container h3 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.resultado-container .resultado-content {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    gap: 16px;
+}
+
+.resultado-container .resultado-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.resultado-container .resultado-item p {
+    font-size: 14px;
+    margin: 0;
+}
+
+.resultado-container .resultado-item strong {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 8px;
+}
+
+        #importInput {
+          display: none;
+        }
+      
+        #exportBtn,
+        #custom-upload-button {
+            border: 1px solid #999;
+            border-radius: 256px;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 16px;
+            height: 36px;
+            line-height: 36px;
+            padding: 0 16px;
+            width: 196px;
+        }
+      
+        #nome-arquivo {
+            color: #555;
+            font-size: 16px;
+            font-style: italic;
+            margin-right: 8px;
+        }
+
+        .loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-top: 2px solid #333;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+/* Default style for the "Faltam" container */
+.faltam-normal {
+    background-color: transparent;
+    color: inherit;
+    transition: all 0.3s ease-in-out;
+}
+
+#faltam,#calculado {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+/* Style for "Estratégia Viável!" */
+.estrategia-viavel {
+    background-color: rgba(0, 255, 0, 0.2); /* Green with 20% opacity */
+    color: green; /* Font color green */
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    animation: expand 0.5s ease-in-out; /* Apply expand animation */
+}
+
+/* Expand animation */
+@keyframes expand {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+    #meta-votos {
+        font-size: 24px;
+        font-weight: 500;
+    }
+
+    #viable {
+        align-items: center;
+        background-color: rgba(0, 128, 0, 0.20);
+        border-radius: 12px;
+        height: 88px;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 500;
+        color: green;
+        padding: 16px;
+        width: 100%;
+    }
+
+      </style>
 </head>
 <body>
-    <div id="simulador">
-        <h2>Simulador de Estratégia de Campanha</h2>
-        <div id="bairros-container"></div>
-        <div id="resultado"></div>
+   <main>
+         <h1>Simulador de Campanha</h1>
+         <p>Simule a sua melhor estratégia de campanha para diferentes bairros.</p>
+         <div id="simulador">
+            <h2>Projeção de Votos</h2>
+            <div class="actions">
+               <button id="exportBtn">Exportar arquivo CSV</button>
+               <label id="custom-upload-button" for="importInput">Importar arquivo CSV</label>
+               <input type="file" id="importInput" accept=".csv">
+               <div id="file-name-container">
+                   <span id="nome-arquivo"></span>
+               </div>
+           </div>
+            <div id="bairros-container" class="bairros-container"></div>            
+            <div id="resultado" class="resultado-container">
+               <h3 id="meta-votos">Meta de <span>3200</span> votos</h3>
+               <div id="viable" hidden="true">
+                <p>Sua campanha é viável!</p>
+            </div>
+               <div class="resultado-content">
+                   <div class="resultado-item">
+                       <p>Votos Calculados</p>
+                       <p id="calculado">0</p>
+                   </div>
+                   <div class="resultado-item">
+                        <div id="faltam-container">
+                           <p>Votos Restantes</p>
+                           <p id="faltam">0</p>
+                        </div>
+                   </div>
+               </div>
+           </div>
+         </div>
+   </main>
+
+    <div>
+      <svg
+      width="210mm"
+      height="297mm"
+      viewBox="0 0 210 297"
+      version="1.1"
+      id="svg1"
+      xml:space="preserve"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:svg="http://www.w3.org/2000/svg">
+     <defs id="defs1" />
+     <g id="layer2">
+       <path
+          id="eldorado"
+          style="fill:#59b224;fill-opacity:1;stroke-width:13.229;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+          d="m 73.875113,188.99906 -15.458828,15.50955 -19.969454,7.00918 21.518864,1.27551 1.918131,3.11338 h 4.482399 l 2.776413,4.29892 9.274858,-2.02399 4.444026,3.46931 2.658211,-2.33845 9.718995,6.498 3.333903,-3.80406 10.366899,-0.20156 2.48576,-6.86143 6.07592,-3.10984 -2.11793,-8.91805 -10.51465,0.25493 -1.43694,-5.97139 2.21628,-0.10188 -0.11159,-2.85184 -4.14455,-1.30551 -1.918131,1.00119 -7.174132,-3.41373 13.092153,-9.57522 -3.41021,-6.53107 -5.008129,-0.21347 -11.875733,8.82586 h -5.301869 z"
+         />
+          <text x="80" y="205" font-size="4" fill="black" for="eldorado">Eldorado</text>
+   
+       <path
+            id="inamar"
+          style="fill:#fe0000;fill-opacity:1;stroke-width:13.229;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+          d="m 116.59819,166.17928 4.65497,4.1485 -5.91679,32.53666 -10.47212,0.25625 -1.3884,-5.88451 2.19136,-0.13772 -0.072,-2.8804 -4.21481,-1.28598 -1.925004,0.98648 -7.127251,-3.3866 13.094605,-9.58692 -3.40081,-6.5485 -5.130809,-0.24274 10.541809,-2.78999 3.34387,2.80995 z"
+        />
+       <text x="102" y="190" font-size="4" fill="black" for="inamar">Inamar</text>
+   
+       <path
+       id="serraria"
+          style="fill:#fef200;fill-opacity:1;stroke-width:13.229;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+          d="m 88.639506,162.57637 1.616893,2.49348 8.061526,2.8472 -1.218624,6.27703 10.400859,-2.84896 3.23907,2.76252 5.80069,-8.06969 4.75909,4.30667 2.6194,-16.28959 -4.03248,-18.98197 -6.17908,9.96518 -1.31671,5.04949 -10.63321,1.25808 -4.147872,9.73846 z"
+         />
+       <text x="100" y="165" font-size="4" fill="black" for="serraria">Serraria</text>
+   
+       <path
+       id="casa-grande"
+          style="fill:#fed883;fill-opacity:1;stroke-width:13.229;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+          d="m 119.96483,134.90839 5.20823,-4.65247 3.93237,10.16634 h 2.01218 l 0.97116,-3.93487 1.98038,1.22939 -0.0798,2.09015 4.31753,-2.7984 1.3189,2.37395 2.61316,0.0458 3.27557,3.44305 1.55467,5.05323 -1.02886,1.52193 1.07096,1.93421 -3.33701,3.05414 1.00048,1.87933 -2.53113,5.02828 1.63856,1.62173 -1.67661,2.29224 -10.27362,6.38273 -1.55655,2.92565 -2.45909,0.2838 -1.5213,7.26221 -2.09764,0.99455 -2.66056,-0.70794 -0.23952,2.09576 -2.70485,0.93717 5.32612,-31.36881 z"
+          />
+       <text x="124" y="150" font-size="4" fill="black" for="casa-grande">Casa Grande</text>
+   
+       <path
+       id="vila-nogueira"
+          style="fill:#ffb402;fill-opacity:1;stroke-width:13.229;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+          d="m 115.45613,127.39545 10.62977,-2.5012 8.09584,-8.15259 6.49375,11.6025 2.02809,1.77329 2.1912,6.42078 6.44542,7.2254 -2.14754,2.28819 -1.56559,-0.13785 -0.66522,1.8313 -1.49198,-5.06632 -3.3395,-3.19823 -2.33154,-0.16092 -1.58804,-2.34277 -3.9542,2.51149 -0.22268,-1.72682 -2.02435,-1.35134 -1.20319,4.05369 h -1.75708 l -3.9149,-10.22341 -5.24503,4.69457 z"
+          id="path5" />
+       <text x="117" y="130" font-size="4" fill="black" for="vila-nogueira">Vila Nogueira</text>
+   
+       <path
+       id="piraporinha"
+          style="fill:#99a843;fill-opacity:1;stroke-width:13.229;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+          d="m 133.53516,114.41606 7.39951,14.07834 2.22069,1.75009 1.66761,6.01549 6.7666,7.27071 2.62778,-3.9496 5.41081,-2.26832 2.49018,-4.31921 -2.19996,-1.25612 2.02574,-7.41538 -0.9981,-1.38358 2.85978,-9.17606 -2.11749,-3.49312 -2.43195,-0.96502 9.78824,-17.232737 -1.8877,-1.960911 0.37622,2.830224 -5.56518,7.952144 -5.15544,-0.87152 -7.16576,2.72305 -2.72128,5.1034 -5.05444,0.67304 -3.63514,3.89977 z"
+          />
+       <text x="140" y="120" font-size="4" fill="black" for="piraporinha">Piraporinha</text>
+   
+       <path
+       id="canhema"
+          style="fill:#8dbedc;fill-opacity:1;stroke-width:13.229;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+          d="m 141.16181,108.9951 -2.58897,3.23599 -5.13691,2.17747 1.36505,2.51487 -4.33421,2.81567 -4.29495,4.6919 -11.0986,2.76759 c 0,0 -7.99184,-13.06745 -9.37012,-12.57965 -1.37828,0.4878 4.02018,-6.81776 4.02018,-6.81776 l 1.61997,1.98605 1.61601,-0.42429 4.31701,-9.25766 5.29084,0.79213 2.96916,-4.283484 z"
+          />
+       <text x="115" y="110" font-size="4" fill="black" for="canhema">Canhema</text>
+   
+       <path
+       id="taboao"
+          style="fill:#fa807d;fill-opacity:1;stroke-width:13.229;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+          d="m 105.26072,114.50823 4.4921,-6.87641 1.60102,2.18099 1.91063,-0.62364 3.97872,-9.264719 5.27099,0.863139 9.97481,-17.278164 -8.99215,-1.362406 -5.56385,5.261295 -1.10968,4.118531 -5.79497,3.434021 -7.27777,-4.740415 -0.65055,-2.35168 0.43223,-4.12559 -2.76098,-1.70466 -3.762165,-9.019047 -7.118117,4.048405 2.914462,5.835544 -2.369323,4.375221 4.690131,2.854921 0.609534,3.294208 1.941063,-0.515589 0.995892,2.6269 4.557383,2.134243 -0.95135,2.617642 -0.20156,11.85059 z"
+          />
+       <text x="105" y="99" font-size="4" fill="black" for="taboao">Taboão</text>
+   
+       <path
+       id="campanario"
+          style="fill:#4ea070;fill-opacity:1;stroke-width:13.229;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+          d="m 86.205223,80.171786 3.68287,-3.179201 2.669297,5.412502 -2.361168,5.048554 4.560787,2.35867 1.196019,3.551264 1.437098,-0.568851 1.356947,2.949667 4.759447,1.938266 -1.37254,2.741963 -0.19586,11.71383 c 0,0 -9.549357,-2.6378 -18.533803,-5.00239 -7.67387,-2.01966 -9.483965,-5.67727 -9.483965,-5.67727 l 1.506643,-2.185905 2.248895,-0.630912 0.378298,-2.712646 2.255756,-2.321872 0.02588,-10.791325 0.692039,-2.876063 -0.279749,-2.429155 1.912699,-0.755661 z"
+          />
+       <text x="79" y="100" font-size="4" fill="black" for="campanario">Campanário</text>
+   
+       <path
+       id="centro"
+       style="fill:#095fa8;fill-opacity:1;stroke-width:13.229;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+          d="m 73.816455,101.61235 0.62982,14.13788 -3.136313,-0.23464 -2.202606,3.03355 1.315212,5.07605 -1.102627,6.71059 -3.970338,4.27775 5.628249,2.32258 0.217437,3.51516 1.208479,5.64898 5.326129,1.83125 6.282769,-8.27853 4.689692,-2.07469 1.967968,1.80919 11.422334,-8.75221 13.40617,-3.13146 c 0,0 -7.74964,-13.51264 -13.90236,-15.63305 -9.36449,-3.22728 -20.172334,-4.84759 -20.172334,-4.84759 z"
+          />
+       <text x="85" y="125" font-size="4" fill="black" for="centro">Centro</text>
+   
+       <path
+       id="conceicao"
+          style="fill:#73c8cb;fill-opacity:1;stroke-width:13.229;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+          d="m 77.958359,147.88872 -0.950463,4.29583 2.775972,1.36947 2.378146,3.44108 2.767595,-1.52692 1.881523,1.65261 -1.501778,5.37244 12.512609,-1.45149 4.025467,-9.8372 10.70078,-1.3408 1.35667,-5.58723 6.04416,-9.32204 -4.34038,-7.46611 -13.26946,3.31891 -11.563022,8.46332 -2.361385,-1.78626 -4.42771,2.00061 z"
+          />
+       <text x="85" y="147" font-size="4" fill="black" for="conceicao">Conceição</text>
+     </g>
+   </svg>
     </div>
 </body>
 </html>
